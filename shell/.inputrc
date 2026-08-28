@@ -1,0 +1,6 @@
+"\ep": history-search-backward
+"\en": history-search-forward
+
+# do not bell on tab-completion
+set bell-style none
+# set bell-style visible

@@ -1,0 +1,8 @@
+[user]
+    name = Purushottam
+	email = 84143197+purushottam-mca@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = true
+	safecrlf = false

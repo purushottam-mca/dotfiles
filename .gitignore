@@ -1,0 +1,4 @@
+# Don't track swap or temp files
+*.swp
+*.swo
+.viminfo

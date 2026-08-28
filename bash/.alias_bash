@@ -1,0 +1,177 @@
+: '
+# +---------------------------------------------+
+# | Steps to work on any python project with uv |
+# +---------------------------------------------+
+    git clone <repo>
+    cd <repo>
+    uv venv
+    source .venv/bin/activate
+    uv pip install -r requirements.txt
+'
+
+# +----+
+# | cp |
+# +----+
+
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
+alias la='ls -alh'
+
+# +-----------+
+# | utilities |
+# +-----------+
+
+alias explorer='nautilus 2> /dev/null' # Open Gui File Manager 
+alias grep="grep -P -i --color=auto"
+
+alias bata="cd /bata"
+alias windows="cd /windows"
+
+alias cls='clear'
+alias cl='cls'
+
+alias vi='vim'
+alias x='exit'
+alias sa='source "$HOME/.alias_bash"'
+alias display='eog'
+
+alias pip='pip3'
+alias python='python3'
+alias py='python3'
+alias pyside-env='source ~/venvs/pyside6-env/bin/activate'
+
+# +-------------------------+
+# | CP command from windows |
+# +-------------------------+
+cp-windows() {
+  if [ "$#" -ne 2 ]; then
+    echo "Usage: cp-windows <source> <destination>"
+    return 1
+  fi
+
+  src="$1"
+  dst="$2"
+
+  # Convert Windows → WSL path if needed
+  if [[ "$src" =~ ^[A-Za-z]:\\ ]]; then
+    src=$(wslpath "$src")
+  fi
+
+  if [[ "$dst" =~ ^[A-Za-z]:\\ ]]; then
+    dst=$(wslpath "$dst")
+  fi
+
+  rsync -avh --info=progress2 --partial "$src"/ "$dst"/
+}
+
+# +-----------------+
+# | Sync to WIndows |
+# +-----------------+
+alias syncCPP="syncdir /bata/C-Plus-Plus/CPP_NETWORKING /windows/Learning/CPP_NETWORKING"
+
+# +---------+
+# |  Pyenv  |
+# +---------+
+
+pyenv-switcher() {
+    echo ""
+    echo "📦 Available Python Versions:"
+
+    # Get system Python version
+    system_py_version=$(python3 --version 2>/dev/null | awk '{print $2}')
+
+    # Get pyenv versions and add "system"
+    versions=($(pyenv versions --bare))
+    versions+=("system")
+
+    # Print the list
+    for i in "${!versions[@]}"; do
+        if [[ "${versions[$i]}" == "system" ]]; then
+            printf "  %2d. system (Python %s)\n" $((i+1)) "$system_py_version"
+        else
+            printf "  %2d. %s\n" $((i+1)) "${versions[$i]}"
+        fi
+    done
+
+    echo ""
+    read -p "🔢 Choose number or type version manually (e.g., 3.9.23 or system): " choice
+
+    # Resolve numeric selection or manual input
+    if [[ "$choice" =~ ^[0-9]+$ ]]; then
+        version="${versions[$((choice-1))]}"
+    else
+        version="$choice"
+    fi
+
+    echo ""
+    echo "🛠️  Choose an action:"
+    printf "  %d. %s\n" 1 "Set as local"
+    printf "  %d. %s\n" 2 "Set as global"
+    printf "  %d. %s\n" 3 "Unset local"
+    printf "  %d. %s\n" 4 "Install python"
+    printf "  %d. %s\n" 5 "Uninstall python"
+    printf "  %d. %s\n" 6 "Current version"
+    printf "  %d. %s\n" 7 "Exit"
+    echo ""
+    read -p "📦 Enter choice [1-7]: " action
+
+    case "$action" in
+        1)
+            pyenv local "$version"
+            echo "✅ Set local Python to $version"
+            ;;
+        2)
+            pyenv global "$version"
+            echo "✅ Set global Python to $version"
+            ;;
+        3)
+            rm -v .python-version
+            echo "🧹 Unset local version (using global/system Python)"
+            ;;
+        4)
+            echo ""
+            read -p "🔢 Enter Python version to install (e.g., 3.9.23): " install_version
+            pyenv install "$install_version"
+            ;;
+        5)
+            echo ""
+            read -p "🗑️  Enter the version to uninstall: " uninstall_version
+            pyenv uninstall -f "$uninstall_version"
+            ;;
+        6)
+            echo "📍 Current pyenv version:"
+            pyenv version
+            ;;
+        7)
+            echo "❌ Exiting..."
+            ;;
+        *)
+            echo "❌ Invalid choice"
+            ;;
+    esac
+    echo ""
+}
+
+# +-------+
+# |  Git  |
+# +-------+
+
+alias gb='git branch'
+alias gs='git status'
+alias gitc='git checkout'
+alias gitp='git pull --rebase'
+alias gitrh='git reset HEAD'
+
+# +-------------------+
+# |  PROJECTS Backup  |
+# +-------------------+
+
+backup-projects() {
+    local backup_dir="${PROJECTS_BACKUP_DIR:-/mnt/f/WSL_Ubuntu/PROJECTS_Backup/}"
+    rsync -avh --progress --delete \
+        --exclude=node_modules --exclude=__pycache__ --exclude=venv \
+        --exclude=.venv --exclude=dist --exclude=build --exclude='*.pyc' \
+        --exclude=.pytest_cache --exclude=.mypy_cache --exclude=target \
+        --exclude=.gradle "$HOME/PROJECTS/" "$backup_dir/"
+}

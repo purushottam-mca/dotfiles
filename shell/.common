@@ -1,0 +1,22 @@
+
+# +--------------+
+# |  Nvidia GPU  |
+# +--------------+
+
+nvidia_env() {
+    export GALLIUM_DRIVER=d3d12
+    export MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA
+}
+
+# +---------+
+# |  Pyenv  |
+# +---------+
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+
