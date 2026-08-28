@@ -168,7 +168,7 @@ alias gitrh='git reset HEAD'
 # +-------------------+
 
 backup-projects() {
-    local backup_dir="${PROJECTS_BACKUP_DIR:-/mnt/f/WSL_Ubuntu/PROJECTS_Backup/}"
+    local backup_dir="${PROJECTS_BACKUP_DIR:-$HOME/PROJECTS_Backup}"
     rsync -avh --progress --delete \
         --exclude=node_modules --exclude=__pycache__ --exclude=venv \
         --exclude=.venv --exclude=dist --exclude=build --exclude='*.pyc' \

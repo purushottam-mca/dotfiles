@@ -74,6 +74,10 @@ if [ -f ~/.alias_bash ]; then
     . ~/.alias_bash
 fi
 
+if [ -f "$HOME/.bashrc.local" ]; then
+    . "$HOME/.bashrc.local"
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
