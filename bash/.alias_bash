@@ -17,6 +17,7 @@ alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
 alias la='ls -alh'
+alias ll='ls -alF'
 
 # +-----------+
 # | utilities |
@@ -175,3 +176,9 @@ backup-projects() {
         --exclude=.pytest_cache --exclude=.mypy_cache --exclude=target \
         --exclude=.gradle "$HOME/PROJECTS/" "$backup_dir/"
 }
+
+# +--------------+
+# |  Other Shell |
+# +--------------+
+alias zshDefault="chsh -s /usr/bin/zsh"
+alias bashDefault="chsh -s /usr/bin/bash"
