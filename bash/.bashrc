@@ -98,4 +98,4 @@ chmod 0700 /run/user/1000
 export LC_ALL=C
 export LS_COLORS="di=1;36:fi=37:ln=1;35:ex=1;32"
 
-export PATH="$HOME/.opencode/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
