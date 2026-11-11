@@ -8,6 +8,12 @@
     source .venv/bin/activate
     uv pip install -r requirements.txt
 '
+# +--------+
+# |  Shell |
+# +--------+
+
+alias zshDefault="chsh -s /usr/bin/zsh"
+alias bashDefault="chsh -s /usr/bin/bash"
 
 # +----+
 # | cp |
@@ -17,7 +23,7 @@ alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
 alias la='ls -alh'
-alias ll='ls -alF'
+alias ll='la'
 
 # +-----------+
 # | utilities |
@@ -29,12 +35,20 @@ alias grep="grep -P -i --color=auto"
 alias bata="cd /bata"
 alias windows="cd /windows"
 
+alias homelab='cd ~/homelab'
+alias storage='cd /mnt/storage'
+alias backup='cd /mnt/wd2tb/Backup'
+
+alias update='sudo apt update && sudo apt upgrade -y'
+
 alias cls='clear'
 alias cl='cls'
 
 alias vi='vim'
 alias x='exit'
-alias sa='source "$HOME/.alias_bash"'
+alias bat=batcat
+alias sa='source "$HOME/.bashrc"'
+alias battery='acpi'
 alias display='eog'
 
 alias pip='pip3'
